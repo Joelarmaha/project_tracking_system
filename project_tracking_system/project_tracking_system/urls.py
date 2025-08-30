@@ -19,14 +19,17 @@ from django.urls import path, include
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-
-# Routers automatically create the API root view
-router = DefaultRouter()
+from . import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/users/", include("users.urls")),
     path("api/projects/", include("projects.urls")),
     path("api/tasks/", include("tasks.urls")),
-    path("", include(router.urls)),
+
+    # API root (custom)
+    path("", views.api_root, name="api-root"),
+
+    # Template page
+    path("register-page/", views.register_page, name="register_page"),
 ]
