@@ -3,11 +3,13 @@ from .models import Task
 from .serializers import TaskSerializer
 from projects.models import Project
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.permissions import IsAuthenticated
+from .permissions import IsTaskOwnerOrAssignee
 
 
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsTaskOwnerOrAssignee]
 
     def get_queryset(self):
         project_id = self.kwargs.get("project_pk")
@@ -21,3 +23,4 @@ class TaskViewSet(viewsets.ModelViewSet):
             raise PermissionDenied("You do not have permission to add tasks to this project.")
 
         serializer.save(project=project)
+

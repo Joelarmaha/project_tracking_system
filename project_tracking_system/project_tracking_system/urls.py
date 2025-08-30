@@ -16,11 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib import admin
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+
+# Routers automatically create the API root view
+router = DefaultRouter()
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("api/", include("tasks.urls")),
-    path("api/", include("users.urls")),
+    path("admin/", admin.site.urls),
+    path("api/users/", include("users.urls")),
+    path("api/projects/", include("projects.urls")),
+    path("api/tasks/", include("tasks.urls")),
+    path("", include(router.urls)),
 ]
-
-
