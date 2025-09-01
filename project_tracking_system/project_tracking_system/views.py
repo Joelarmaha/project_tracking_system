@@ -7,7 +7,7 @@ from django.shortcuts import render
 
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])   # 👈 must be inside a list
+@permission_classes([IsAuthenticated])
 def api_root(request, format=None):
     return Response({
         "users": "/api/users/",
