@@ -69,7 +69,6 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'project_tracking_system.wsgi.application'
 
 REST_FRAMEWORK = {
@@ -81,7 +80,6 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.AllowAny",
     ]
 }
-
 
 # Database
 
@@ -135,3 +133,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
+
+APP_DIRS = True

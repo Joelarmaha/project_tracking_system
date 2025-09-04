@@ -19,7 +19,7 @@ class Task(models.Model):
         related_name="user_tasks"
     )
 
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, unique=True)
     description = models.TextField(blank=True)
     due_date = models.DateTimeField()
     priority = models.CharField(max_length=10, choices=Priority.choices, default=Priority.MEDIUM)

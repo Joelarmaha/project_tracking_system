@@ -18,3 +18,12 @@ def api_root(request, format=None):
 
 def register_page(request):
     return render(request, "register.html")
+
+
+def login_page(request):
+    return render(request, "login.html")
+
+
+def password_reset(request):
+    return render(request, "password_reset.html")
+
