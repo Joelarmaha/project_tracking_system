@@ -1,31 +1,40 @@
-
 from django.db import models
-from django.conf import settings
+from django.utils import timezone
 from projects.models import Project
 
 
 class Task(models.Model):
-    STATUS_CHOICES = [
-        ("todo", "To Do"),
-        ("in_progress", "In Progress"),
-        ("completed", "Completed"),
-    ]
+    class Priority(models.TextChoices):
+        LOW = "low", "Low"
+        MEDIUM = "medium", "Medium"
+        HIGH = "high", "High"
+
+    class Status(models.TextChoices):
+        PENDING = "pending", "Pending"
+        COMPLETED = "completed", "Completed"
 
     project = models.ForeignKey(
         Project,
         on_delete=models.CASCADE,
         related_name="tasks"
     )
+
     title = models.CharField(max_length=200)
-    description = models.TextField(blank=True, null=True)
-    status = models.CharField(
-        max_length=20, choices=STATUS_CHOICES, default="todo"
-    )
-    due_date = models.DateField(blank=True, null=True)
-    priority = models.IntegerField(default=0)  # 0 = low, 1 = medium, 2 = high
+    description = models.TextField(blank=True)
+    due_date = models.DateTimeField()
+    priority = models.CharField(max_length=10, choices=Priority.choices, default=Priority.MEDIUM)
+    status = models.CharField(max_length=10, choices=Status.choices, default=Status.PENDING)
+    completed_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return f"{self.title} ({self.project.name})"
+    def mark_completed(self):
+        self.status = self.Status.COMPLETED
+        self.completed_at = timezone.now()
 
+    def mark_incomplete(self):
+        self.status = self.Status.PENDING
+        self.completed_at = None
+
+    def __str__(self):
+        return f"{self.title} ({self.project})"

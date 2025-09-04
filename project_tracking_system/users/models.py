@@ -13,7 +13,12 @@ class Task(models.Model):
         PENDING = "pending", "Pending"
         COMPLETED = "completed", "Completed"
 
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="tasks")
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="user_tasks"
+    )
+
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     due_date = models.DateTimeField()
@@ -23,6 +28,7 @@ class Task(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 
     def mark_completed(self):
         self.status = self.Status.COMPLETED
