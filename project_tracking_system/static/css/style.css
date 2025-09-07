@@ -1,13 +1,20 @@
 body {
-    background-color: #f8f9fa;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f5f7fa;
 }
 
-h2 {
-    margin-top: 20px;
-    margin-bottom: 20px;
+#wrapper {
+    display: flex;
+    width: 100%;
 }
 
-.table td, .table th {
-    vertical-align: middle;
+#sidebar-wrapper {
+    min-width: 220px;
+    max-width: 220px;
+    height: 100vh;
 }
 
+#page-content-wrapper {
+    flex: 1;
+    padding: 20px;
+}
